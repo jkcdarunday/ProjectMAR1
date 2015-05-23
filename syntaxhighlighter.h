@@ -23,6 +23,14 @@
 #include <QSyntaxHighlighter>
 #include "mapper.h"
 
+
+/*!
+    \class SyntaxHighlighter
+
+    \brief The SyntaxHighlighter class provides
+    extends the \l{QSyntaxHighlighter} class to provide
+    a syntax highlighter for our assembly language.
+*/
 class SyntaxHighlighter : public QSyntaxHighlighter
 {
 public:

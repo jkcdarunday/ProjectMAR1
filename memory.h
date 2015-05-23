@@ -23,6 +23,12 @@
 #include <QAbstractTableModel>
 #include <QHash>
 
+/*!
+    \class Memory
+
+    \brief The Memory class provides
+    a Table Model of the computer's memory.
+*/
 class Memory : public QAbstractTableModel
 {
 public:

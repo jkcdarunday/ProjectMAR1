@@ -40,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->registerTable->setModel(r);
     ui->memoryTable->setModel(m);
 
+    // The following code sets up the QGraphicsScene for the
+    // Pipeline View.
     QGraphicsScene *scene = new QGraphicsScene();
     int w = 150;
     scene->addRect(0,0,w,100);
@@ -61,9 +63,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ppExecute = scene->addText("");
     ppExecute->setPos(2*w +60, 40);
 
+    // The scene is finally applied to the pipeline view.
     ui->pipeline->setScene(scene);
 
-
+    // Initialize the Syntax Highlighter.
     highlighter = new SyntaxHighlighter(ui->assemblyCode->document());
 }
 
@@ -106,10 +109,17 @@ void MainWindow::setItemToState(int row, int column, char state)
 void MainWindow::nextState()
 {
     if(!p->queue->empty() && p->checkState(p->queue->size()-1)!=4){
-        ui->cycle->setColumnCount(ui->cycle->columnCount()+1);
+        // The following code will execute if the queue is not empty
+        // and the last instruction has not executed yet.
+
+        ui->cycle->setColumnCount(ui->cycle->columnCount()+1); // Add a new column
+
+        //Set the values of the new column
         for(int i=p->queue->size()-1;i>=0;i--)
             setItemToState(i, ui->cycle->columnCount()-1, p->nextState(i));
     } else {
+        // Reenable the execute button and the text editor
+        // and then disable the next state button once we're done.
         ui->executeButton->setEnabled(true);
         ui->assemblyCode->setEnabled(true);
         ui->nextStateButton->setEnabled(false);
@@ -121,16 +131,25 @@ void MainWindow::on_executeButton_clicked()
 {
     int lineError=0;
     if((lineError=p->parse(ui->assemblyCode->document()->toPlainText()))==0){
+        // This code only runs when the parse() function returns 0
+        // which means that the code successfully ran.
+
         ui->cycle->setRowCount(p->queue->size());
         for(int i=0;i<p->queue->size();i++)
             ui->cycle->setVerticalHeaderItem(i, new QTableWidgetItem(p->queue->at(i)->code));
         ui->cycle->setColumnCount(0);
+
+        // Disable the execute button and the text editor
+        // and then enable the next state button upon execution.
         ui->executeButton->setEnabled(false);
         ui->assemblyCode->setEnabled(false);
         ui->nextStateButton->setEnabled(true);
     } else {
         QMessageBox::critical(this, "Execution Failed", QString("An error has been found while executing code at line ") + QString::number(lineError) + ".");
     }
+
+    // Uncomment this to automatically go to the next state
+    // every 500 ms
     //this->clock->start(500);
 }
 

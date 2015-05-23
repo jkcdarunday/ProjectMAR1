@@ -26,6 +26,15 @@
 #include <QDebug>
 #include "mapper.h"
 
+/*!
+    \class AssemblyParser
+
+    \brief The AssemblyPasrer class provides
+    the assembly parsing capability of the program.
+
+    It generates a \l{QQueue} of \l{AssemblyParser::Instruction} that
+    is filled up when the \l{AssemblyParser::parse} function is executed.
+*/
 class AssemblyParser
 {
 public:

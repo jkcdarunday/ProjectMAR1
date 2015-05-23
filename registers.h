@@ -24,6 +24,13 @@
 #include <QVector>
 #include "mapper.h"
 
+
+/*!
+    \class Registers
+
+    \brief The Registers class provides
+    a Table Model of the computer's registers.
+*/
 class Registers : public QAbstractTableModel
 {
 public:

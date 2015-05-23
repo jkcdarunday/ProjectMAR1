@@ -22,6 +22,13 @@
 
 #include <QStringList>
 
+/*!
+    \class Mapper
+
+    \brief The Mapper class provides
+    a list of registers and instructions and functions
+    for mapping their name dependencies.
+*/
 class Mapper
 {
 public:
